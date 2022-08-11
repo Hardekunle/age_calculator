@@ -40,10 +40,10 @@ export class AppService {
   }
 
   private getDateString(date: string): string{
-    if(date==null || date=='') throw new BadRequestException('provide a date of birth in the format dd/mm/yyyy');
-    var res=date.split('/');
-    if(res.length!=3)
-        throw new BadRequestException('provide your date of birth in the format dd/mm/yyyy');
+    // if(date==null || date=='') throw new BadRequestException('provide a date of birth in the format dd/mm/yyyy');
+     var res=date.split('/');
+    // if(res.length!=3)
+    //     throw new BadRequestException('provide your date of birth in the format dd/mm/yyyy');
 
     return res[2]+'-'+res[1]+'-'+res[0];
   }
