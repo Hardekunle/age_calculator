@@ -1,8 +1,8 @@
 {
-    "name": "",
+    "name": "age_calculator",
     "track": "backend",
-    "email": "",
-    "githubUsername": "",
-    "deployedAppURL": "",
-    "explainer": ""
+    "email": "folorunsoa98@gmail.com",
+    "githubUsername": "Hardekunle",
+    "deployedAppURL": "https://age-calculator-xy.herokuapp.com",
+    "explainer": "this typescript application calculates the age by supplying the date of birth"
 }
