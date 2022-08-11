@@ -12,8 +12,8 @@ export class AppService {
     var birthDayObj= new Date(dateString);
     var todayObj= new Date();
 
-    if(birthDayObj>todayObj)
-        throw new BadRequestException('birth date cannot be greater than today');
+    // if(birthDayObj>todayObj)
+    //     throw new BadRequestException('birth date cannot be greater than today');
 
     return this.getAgeBetweenDates(birthDayObj,todayObj);
     
@@ -40,7 +40,7 @@ export class AppService {
   }
 
   private getDateString(date: string): string{
-    if(date==null || date=='') throw new BadRequestException('provide a valid date of birth');
+    if(date==null || date=='') throw new BadRequestException('provide a date of birth in the format dd/mm/yyyy');
     
     var res=date.split('/');
     if(res.length!=3)
