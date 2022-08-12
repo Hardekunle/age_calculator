@@ -28,7 +28,7 @@ export class WsThrottlerGuard extends ThrottlerGuard {
    const key = this.generateKey(context, ip);
    const ttls = await this.storageService.getRecord(key);
 
-    if (ttls.length >= limit) {
+    if (ttls.length > limit) {
       throw new ThrottlerException();
     }
 
