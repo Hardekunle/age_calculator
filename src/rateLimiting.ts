@@ -20,6 +20,7 @@ export class WsThrottlerGuard extends ThrottlerGuard {
     limit: number,
     ttl: number,
   ): Promise<boolean> {
+    var currentTime= new Date().getTime();
     const client = context.switchToHttp().getRequest();
     let ip= client.ip;
     if(client.headers['x-forwarded-for']) ip= client.headers['x-forwarded-for'];
@@ -28,7 +29,7 @@ export class WsThrottlerGuard extends ThrottlerGuard {
 
     console.log(ttls.length);
     console.log("size: "+Tracker.size)
-    console.log(new Date().getTime());
+    console.log(currentTime);
     console.log(ttls);
     if(ttls.length+1< limit && !Tracker.has(ip)){
       await this.storageService.addRecord(ip, ttl);
@@ -43,7 +44,6 @@ export class WsThrottlerGuard extends ThrottlerGuard {
        
         var delayTime= Tracker.get(ip);
         console.log("target release :"+ delayTime);
-        var currentTime= new Date().getTime();
         if(delayTime >= currentTime)
           throw new ThrottlerException("too many request");
         else{
