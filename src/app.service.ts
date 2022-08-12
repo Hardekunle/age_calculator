@@ -43,11 +43,10 @@ export class AppService {
      if(date==null || date=='') 
         throw new BadRequestException('provide a date of birth in the format dd/mm/yyyy');
     
-    
      var res1= date.split('/');
-    //  if(res1.length !=3){
-    //       throw new BadRequestException('provide your date of birth in the format dd/mm/yyyy');
-    //  }
+     if(res1.length !=3){
+          throw new BadRequestException('provide your date of birth in the format dd/mm/yyyy');
+     }
      return res1[2]+'-'+res1[1]+'-'+res1[0];
   }
 }

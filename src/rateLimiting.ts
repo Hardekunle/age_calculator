@@ -1,5 +1,6 @@
 import { createParamDecorator, ExecutionContext, Injectable } from "@nestjs/common";
 import { ThrottlerException, ThrottlerGuard } from "@nestjs/throttler";
+import { Console } from "console";
 
 
 
@@ -23,14 +24,31 @@ export class WsThrottlerGuard extends ThrottlerGuard {
     let ip= client.ip;
     if(client.headers['x-forwarded-for']) ip= client.headers['x-forwarded-for'];
     
-   console.log(ip);
-   const ttls = await this.storageService.getRecord(ip);
+    const ttls = await this.storageService.getRecord(ip);
 
-    if (ttls.length >= limit) {
-      throw new ThrottlerException();
+    console.log(ttls.length);
+    console.log(new Date().getTime());
+    if(ttls.length+1< limit){
+      await this.storageService.addRecord(ip, ttl);
     }
-
-    await this.storageService.addRecord(ip, ttl);
+    else if (ttls.length+1 == limit) {
+      await this.storageService.addRecord(ip, ttl); //add the final
+      Tracker.set(ip, new Date().getTime()+ 2000) //give a tolerance of 1 sec;
+    }
+    else{
+        var delayTime= Tracker.get(ip);
+        var currentTime= new Date().getTime();
+        if(delayTime > currentTime)
+          throw new ThrottlerException();
+        else{
+           await this.storageService.addRecord(ip, ttl);
+           Tracker.delete(ip);
+        }
+    }
     return true;
   }
 }
+
+export const Tracker= new Map();
+
+
