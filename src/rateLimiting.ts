@@ -29,7 +29,7 @@ export class WsThrottlerGuard extends ThrottlerGuard {
     console.log(ttls.length);
     console.log("size: "+Tracker.size)
     console.log(new Date().getTime());
-    if(ttls.length+1< limit){
+    if(ttls.length+1< limit && !Tracker.has(ip)){
       await this.storageService.addRecord(ip, ttl);
     }
     else if (ttls.length+1 == limit) {
