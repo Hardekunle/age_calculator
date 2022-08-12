@@ -12,6 +12,9 @@ export class AppService {
     var birthDayObj= new Date(dateString);
     var todayObj= new Date();
 
+    if(!Number.isInteger(birthDayObj.getTime())||!Number.isInteger(todayObj.getTime()))
+      throw new BadRequestException('provide your date of birth in the format dd/mm/yyyy');
+
     if(birthDayObj>todayObj)
         throw new BadRequestException('birth date cannot be greater than today');
 
@@ -46,16 +49,6 @@ export class AppService {
         var res1= date.split('/');
         if(res1.length !=3)
               throw new BadRequestException('provide your date of birth in the format dd/mm/yyyy');
-
-          var id1= Number(res1[0]);
-          var id2= Number(res1[1]);
-          var id3= Number(res1[2]);
-
-          if(!Number.isInteger(id1)|| !Number.isInteger(id2)|| !Number.isInteger(id3))
-            throw new BadRequestException('provide your date of birth in the format dd/mm/yyyy');
-
-          if(id1<=0|| id2<=0 || id3<=0)
-            throw new BadRequestException('provide your date of birth in the format dd/mm/yyyy');
 
         return res1[2]+'-'+res1[1]+'-'+res1[0];
   }
