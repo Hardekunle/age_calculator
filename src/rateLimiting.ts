@@ -24,7 +24,6 @@ export class WsThrottlerGuard extends ThrottlerGuard {
     if(client.headers['x-forwarded-for']) ip= client.headers['x-forwarded-for'];
     
    console.log(ip);
-   //const key = this.generateKey(context, ip);
    const ttls = await this.storageService.getRecord(ip);
 
     if (ttls.length >= limit) {
