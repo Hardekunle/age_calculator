@@ -35,7 +35,7 @@ export class WsThrottlerGuard extends ThrottlerGuard {
     else if (ttls.length+1 == limit) {
       await this.storageService.addRecord(ip, ttl); //add the final
       var updated= await this.storageService.getRecord(ip);
-      Tracker.set(ip, updated[limit-1]+ 5000) //give a tolerance of 2 sec;
+      Tracker.set(ip, updated[limit-1]+ 10000) //give a tolerance of 2 sec;
     }
     else{
         console.log(ttls);
@@ -43,7 +43,7 @@ export class WsThrottlerGuard extends ThrottlerGuard {
         var delayTime= Tracker.get(ip);
         console.log("target release :"+ delayTime);
         var currentTime= new Date().getTime();
-        if(delayTime > currentTime)
+        if(delayTime >= currentTime)
           throw new ThrottlerException("too many request");
         else{
            await this.storageService.addRecord(ip, ttl);
