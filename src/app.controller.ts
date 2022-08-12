@@ -20,7 +20,7 @@ export class AppController {
   @RateLimit({
     keyPrefix: 'getAge',
     points: 3,
-    duration: 1,
+    duration: 60,
     customResponseSchema: () => { return { message: 'Too many request' }}
   })
   @Get('howold')
