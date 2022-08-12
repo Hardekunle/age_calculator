@@ -46,11 +46,13 @@ export class AppService {
         var res1= date.split('/');
         if(res1.length !=3)
               throw new BadRequestException('provide your date of birth in the format dd/mm/yyyy');
-          
-          
-          var id1= parseInt(res1[0]);
-          var id2= parseInt(res1[1]);
-          var id3= parseInt(res1[2]);
+
+          var id1= Number(res1[0]);
+          var id2= Number(res1[1]);
+          var id3= Number(res1[2]);
+
+          if(!Number.isInteger(NaN)|| !Number.isInteger(id2)|| !Number.isInteger(id3))
+            throw new BadRequestException('provide your date of birth in the format dd/mm/yyyy');
 
           if(id1<=0|| id2<=0 || id3<=0)
             throw new BadRequestException('provide your date of birth in the format dd/mm/yyyy');
