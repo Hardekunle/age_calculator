@@ -1,4 +1,4 @@
-import { ExecutionContext, Injectable } from "@nestjs/common";
+import { createParamDecorator, ExecutionContext, Injectable } from "@nestjs/common";
 import { ThrottlerException, ThrottlerGuard } from "@nestjs/throttler";
 
 
@@ -7,6 +7,7 @@ import { ThrottlerException, ThrottlerGuard } from "@nestjs/throttler";
 export class ThrottlerBehindProxyGuard extends ThrottlerGuard {
   protected getTracker(req: Record<string, any>): string {
     console.log("the request ip is "+ req.ip);
+    
     return req.ips.length ? req.ips[0] : req.ip; // individualize IP extraction to meet your own needs
   }
 }
@@ -19,6 +20,7 @@ export class WsThrottlerGuard extends ThrottlerGuard {
     ttl: number,
   ): Promise<boolean> {
     const client = context.switchToWs().getClient();
+    console.log(client)
     const ip = client.conn.remoteAddress;
     const key = this.generateKey(context, ip);
     const ttls = await this.storageService.getRecord(key);

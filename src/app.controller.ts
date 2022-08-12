@@ -1,7 +1,6 @@
-import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
+import { Controller, ExecutionContext, Get, Param, Query, Req, UseGuards } from '@nestjs/common';
 import { AppService } from './app.service';
-import { RateLimit } from 'nestjs-rate-limiter'
-import { ThrottlerBehindProxyGuard } from './rateLimiting';
+import { ThrottlerBehindProxyGuard, WsThrottlerGuard } from './rateLimiting';
 
 @Controller()
 export class AppController {
@@ -13,10 +12,9 @@ export class AppController {
   }
 
   
-  @UseGuards(ThrottlerBehindProxyGuard)
+  @UseGuards(WsThrottlerGuard)
   @Get('howold')
-  async getAge(@Query() query: { dob: string }){
-      return "here";
+  async getAge( @Query() query: { dob: string }){
       return this.appService.getAgeByDate(query.dob);      
   }
 }
