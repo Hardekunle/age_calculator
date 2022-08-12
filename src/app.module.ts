@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
+import { WsThrottlerGuard } from './rateLimiting';
 
 
 @Module({
@@ -16,7 +17,7 @@ import { APP_GUARD } from '@nestjs/core';
   providers: [AppService,
     {
         provide: APP_GUARD,
-        useClass: ThrottlerGuard
+        useClass: WsThrottlerGuard
     }
 ],
 })
