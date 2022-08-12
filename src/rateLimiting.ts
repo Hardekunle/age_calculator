@@ -28,27 +28,32 @@ export class WsThrottlerGuard extends ThrottlerGuard {
     
     const ttls = await this.storageService.getRecord(ip);
 
-    if(ttls.length+1< limit && !Tracker.has(ip)){
-      await this.storageService.addRecord(ip, ttl);
+    if (ttls.length >= limit) {
+      throw new ThrottlerException();
     }
-    else if (ttls.length+1 == limit) {
-      await this.storageService.addRecord(ip, ttl); //add the final
-      var updated= await this.storageService.getRecord(ip);
-      Tracker.set(ip, updated[limit-1]) //give a tolerance of 2 sec;
-    }
-    else{
+
+    await this.storageService.addRecord(ip, ttl);
+    // if(ttls.length+1< limit && !Tracker.has(ip)){
+    //   await this.storageService.addRecord(ip, ttl);
+    // }
+    // else if (ttls.length+1 == limit) {
+    //   await this.storageService.addRecord(ip, ttl); //add the final
+    //   var updated= await this.storageService.getRecord(ip);
+    //   Tracker.set(ip, updated[limit-1]) //give a tolerance of 2 sec;
+    // }
+    // else{
 
        
-        var delayTime= Tracker.get(ip);
-        console.log("target release :"+ delayTime);
-        if(delayTime >= currentTime)
-          throw new ThrottlerException("too many request");
-        else{
-           await this.storageService.addRecord(ip, ttl);
-           Tracker.delete(ip);
-        }
-    }
-    return true;
+    //     var delayTime= Tracker.get(ip);
+    //     console.log("target release :"+ delayTime);
+    //     if(delayTime >= currentTime)
+    //       throw new ThrottlerException("too many request");
+    //     else{
+    //        await this.storageService.addRecord(ip, ttl);
+    //        Tracker.delete(ip);
+    //     }
+    // }
+     return true;
   }
 }
 
