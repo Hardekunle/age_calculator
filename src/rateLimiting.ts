@@ -31,7 +31,6 @@ export class WsThrottlerGuard extends ThrottlerGuard {
       throw new ThrottlerException();
     }
 
-
     await this.storageService.addRecord(ip, ttl);
     return true;
   }
