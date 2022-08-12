@@ -35,7 +35,7 @@ export class WsThrottlerGuard extends ThrottlerGuard {
     else if (ttls.length+1 == limit) {
       await this.storageService.addRecord(ip, ttl); //add the final
       var updated= await this.storageService.getRecord(ip);
-      Tracker.set(ip, updated[limit-1]+ 1200) //give a tolerance of 2 sec;
+      Tracker.set(ip, updated[limit-1]+ 1500) //give a tolerance of 2 sec;
     }
     else{
         console.log(ttls);
