@@ -40,8 +40,6 @@ export class AppService {
   }
 
   private getDateString(date: string): string{
-    console.log(date);
-    console.log(date);
      if(date==null || date=='') 
         throw new BadRequestException('provide a date of birth in the format dd/mm/yyyy');
      var res1= date.split('/');
