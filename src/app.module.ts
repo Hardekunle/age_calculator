@@ -3,8 +3,6 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
-import { Tracker, WsThrottlerGuard } from './rateLimiting';
-import { RateLimiterGuard, RateLimiterModule } from 'nestjs-rate-limiter'
 
 
 @Module({

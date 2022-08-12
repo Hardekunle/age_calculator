@@ -1,6 +1,5 @@
-import { createParamDecorator, ExecutionContext, Injectable } from "@nestjs/common";
+import { ExecutionContext, Injectable } from "@nestjs/common";
 import { ThrottlerException, ThrottlerGuard } from "@nestjs/throttler";
-import { Console } from "console";
 
 Injectable()
 export class WsThrottlerGuard extends ThrottlerGuard {
