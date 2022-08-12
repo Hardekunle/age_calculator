@@ -39,7 +39,7 @@ export class WsThrottlerGuard extends ThrottlerGuard {
         var delayTime= Tracker.get(ip);
         var currentTime= new Date().getTime();
         if(delayTime > currentTime)
-          throw new ThrottlerException("too many request");
+          throw new ThrottlerException();
         else{
            await this.storageService.addRecord(ip, ttl);
            Tracker.delete(ip);
