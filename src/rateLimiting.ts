@@ -1,6 +1,14 @@
 import { ExecutionContext, Injectable } from "@nestjs/common";
 import { ThrottlerException, ThrottlerGuard } from "@nestjs/throttler";
 
+
+@Injectable()
+export class ThrottlerBehindProxyGuard extends ThrottlerGuard {
+  protected getTracker(req: Record<string, any>): string {
+    return req.ips.length ? req.ips[0] : req.ip; // individualize IP extraction to meet your own needs
+  }
+}
+
 Injectable()
 export class WsThrottlerGuard extends ThrottlerGuard {
   async handleRequest(
