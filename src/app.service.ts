@@ -51,7 +51,7 @@ export class AppService {
           var id2= Number(res1[1]);
           var id3= Number(res1[2]);
 
-          if(!Number.isInteger(NaN)|| !Number.isInteger(id2)|| !Number.isInteger(id3))
+          if(!Number.isInteger(id1)|| !Number.isInteger(id2)|| !Number.isInteger(id3))
             throw new BadRequestException('provide your date of birth in the format dd/mm/yyyy');
 
           if(id1<=0|| id2<=0 || id3<=0)
