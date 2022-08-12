@@ -15,7 +15,7 @@ export class AppController {
 
   @Get('howold')
   getAge(@Query() query: { dob: string }){
-      return "dhf";
+     // return "dhf";
       return this.appService.getAgeByDate(query.dob);      
   }
 }
