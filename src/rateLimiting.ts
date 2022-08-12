@@ -27,13 +27,14 @@ export class WsThrottlerGuard extends ThrottlerGuard {
     const ttls = await this.storageService.getRecord(ip);
 
     console.log(ttls.length);
+    console.log("size: "+Tracker.size)
     console.log(new Date().getTime());
     if(ttls.length+1< limit){
       await this.storageService.addRecord(ip, ttl);
     }
     else if (ttls.length+1 == limit) {
       await this.storageService.addRecord(ip, ttl); //add the final
-      Tracker.set(ip, new Date().getTime()+ 3000) //give a tolerance of 1 sec;
+      Tracker.set(ip, new Date().getTime()+ 5000) //give a tolerance of 1 sec;
     }
     else{
         var delayTime= Tracker.get(ip);
