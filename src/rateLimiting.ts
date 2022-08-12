@@ -19,20 +19,21 @@ export class WsThrottlerGuard extends ThrottlerGuard {
     limit: number,
     ttl: number,
   ): Promise<boolean> {
-    const client = context.switchToWs().getClient();
-    const ip = ['conn', '_socket']
-    .map((key) => client[key])
-    .filter((obj) => obj)
-    .shift().remoteAddress;
-  const key = this.generateKey(context, ip);
-  const ttls = await this.storageService.getRecord(key);
+    const client = context.switchToHttp().getRequest();
+    console.log(client.headers);
+    // const ip = ['conn', '_socket']
+    // .map((key) => client[key])
+    // .filter((obj) => obj)
+    // .shift().remoteAddress;
+//   const key = this.generateKey(context, ip);
+//   const ttls = await this.storageService.getRecord(key);
   
 
-    if (ttls.length >= limit) {
-      throw new ThrottlerException();
-    }
+//     if (ttls.length >= limit) {
+//       throw new ThrottlerException();
+//     }
 
-    await this.storageService.addRecord(key, ttl);
+//     await this.storageService.addRecord(key, ttl);
     return true;
   }
 }
