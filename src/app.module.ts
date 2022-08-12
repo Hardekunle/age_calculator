@@ -4,20 +4,21 @@ import { AppService } from './app.service';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
 import { WsThrottlerGuard } from './rateLimiting';
+import { RateLimiterGuard, RateLimiterModule } from 'nestjs-rate-limiter'
 
 
 @Module({
-  imports: [
-    ThrottlerModule.forRoot({
-        ttl: 1,
-        limit: 3 
-    })
-  ],
+  imports: [RateLimiterModule],
+  //   ThrottlerModule.forRoot({
+  //       ttl: 1,
+  //       limit: 3 
+  //   })
+  // ],
   controllers: [AppController],
   providers: [AppService,
     {
         provide: APP_GUARD,
-        useClass: WsThrottlerGuard
+        useClass: RateLimiterGuard
     }
 ],
 })
