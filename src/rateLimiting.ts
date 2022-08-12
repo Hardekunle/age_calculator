@@ -33,13 +33,13 @@ export class WsThrottlerGuard extends ThrottlerGuard {
     }
     else if (ttls.length+1 == limit) {
       await this.storageService.addRecord(ip, ttl); //add the final
-      Tracker.set(ip, new Date().getTime()+ 2000) //give a tolerance of 1 sec;
+      Tracker.set(ip, new Date().getTime()+ 3000) //give a tolerance of 1 sec;
     }
     else{
         var delayTime= Tracker.get(ip);
         var currentTime= new Date().getTime();
         if(delayTime > currentTime)
-          throw new ThrottlerException();
+          throw new ThrottlerException("too many request");
         else{
            await this.storageService.addRecord(ip, ttl);
            Tracker.delete(ip);
