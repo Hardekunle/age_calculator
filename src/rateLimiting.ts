@@ -23,14 +23,11 @@ export class WsThrottlerGuard extends ThrottlerGuard {
     var currentTime= new Date().getTime();
     const client = context.switchToHttp().getRequest();
     let ip= client.ip;
-    if(client.headers['x-forwarded-for']) ip= client.headers['x-forwarded-for'];
+    if(client.headers['x-forwarded-for']) 
+      ip= client.headers['x-forwarded-for'];
     
     const ttls = await this.storageService.getRecord(ip);
 
-    console.log(ttls.length);
-    console.log("size: "+Tracker.size)
-    console.log(currentTime);
-    console.log(ttls);
     if(ttls.length+1< limit && !Tracker.has(ip)){
       await this.storageService.addRecord(ip, ttl);
     }

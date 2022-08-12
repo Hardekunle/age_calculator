@@ -15,6 +15,7 @@ export class AppController {
   @UseGuards(WsThrottlerGuard)
   @Get('howold')
   async getAge( @Query() query: { dob: string }){
+      return "here";
       return this.appService.getAgeByDate(query.dob);      
   }
 }
