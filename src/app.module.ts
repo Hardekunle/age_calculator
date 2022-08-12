@@ -10,7 +10,7 @@ import { RateLimiterGuard, RateLimiterModule } from 'nestjs-rate-limiter'
 @Module({
   imports: [
     ThrottlerModule.forRoot({
-        ttl: 2,
+        ttl: 60,
         limit: 3 
     })
   ],
