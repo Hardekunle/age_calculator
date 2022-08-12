@@ -20,10 +20,13 @@ export class WsThrottlerGuard extends ThrottlerGuard {
     ttl: number,
   ): Promise<boolean> {
     const client = context.switchToWs().getClient();
-    console.log(client)
-    const ip = client.conn.remoteAddress;
-    const key = this.generateKey(context, ip);
-    const ttls = await this.storageService.getRecord(key);
+    const ip = ['conn', '_socket']
+    .map((key) => client[key])
+    .filter((obj) => obj)
+    .shift().remoteAddress;
+  const key = this.generateKey(context, ip);
+  const ttls = await this.storageService.getRecord(key);
+  
 
     if (ttls.length >= limit) {
       throw new ThrottlerException();
